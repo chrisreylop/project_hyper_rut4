@@ -12,7 +12,7 @@ public class StageSetMaster : MonoBehaviour
     {
         if(other.CompareTag("StageDestroyPoint"))
         {
-            Debug.Log("entered StageDestroyPoint");
+            //Debug.Log("entered StageDestroyPoint");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -47,8 +47,17 @@ public class StageSetMaster : MonoBehaviour
     }
     private void Start()
     {
-        courseSpeed = GameManager.gameManagerInstance.courseSpeed;
-        spawnersSpacingStep = GameManager.gameManagerInstance.spawnersSpacingStep;
+        if(GameManager.gameManagerInstance != null)
+        {
+            courseSpeed = GameManager.gameManagerInstance.courseSpeed;
+            spawnersSpacingStep = GameManager.gameManagerInstance.spawnersSpacingStep;
+        }
+        else
+        {
+            courseSpeed = 0f;
+            spawnersSpacingStep = 600;
+        }
+
         SetSpawners();
     }
 }

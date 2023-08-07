@@ -13,17 +13,17 @@ public class PickUpType : MonoBehaviour
             if(pickUpType == 0)
             {
                 GameManager.gameManagerInstance.UpdateFuel(30, 0);
-                Debug.Log("Picked Up 50 fuel");
+                //Debug.Log("Picked Up 30 fuel");
             }
             else if(pickUpType == 1)
             {
                 GameManager.gameManagerInstance.UpdateFuel(10, 1);
-                Debug.Log("Picked Up 10 fuel");
+                //Debug.Log("Picked Up 10 fuel");
             }
             else if(pickUpType == 2)
             {
                 GameManager.gameManagerInstance.UpdateFuel(-10, 2);
-                Debug.Log("Picked dron lost 10 fuel");
+                //Debug.Log("Picked dron lost 10 fuel");
             }
             Destroy(this.gameObject);
         }        

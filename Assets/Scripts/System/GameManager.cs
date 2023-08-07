@@ -10,22 +10,31 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public static GameManager gameManagerInstance;
     [Header("Game Logic")]
 
+    public int level;
     public float fuel = 100;
     public float fuelDelta = 0.1f;
     public GameObject spawnPoint;
     public GameObject stage1;
     public GameObject stage2;
+    public GameObject passenger;
+    public float passengerPickUpSpeed = 0f;
     public float progressBarDelta;
     public float courseSpeed = 0f;
     public int spawnersSpacingStep = 100;
-    
+
+    public EndingsData endingsData;
+
+    //Hidden game logic values
+    [HideInInspector]
+    public bool passengerAlreadySpawned = true;
+
     [Header("GUI")]
     public Slider progressBarSlider;
     public Slider fuelLevelBarSlider;
-    public Text scoreText;
-    public Text livesText;
-    private int score;
-    private int lives = 5;
+    //public Text scoreText;
+    //public Text livesText;
+    //private int score;
+    //private int lives = 5;
 
     //NARRATIVE TEXT
     [Header("Narrative Interface")]
@@ -33,60 +42,59 @@ public class GameManager : MonoBehaviour
     public Text narrativeText;
     public Image passengerPortrait;
     public GameObject dialogueBox;
-    public Dialogue [] passengerDialogues;
+    public Dialogue[] passengerDialogues;
     private int passengerDialoguesIndex = 0;
-    public Transform CDMXMap;
     public Animator dialogueBoxAnimator;
 
     //NARRATIVE AUDIO
     [Header("Narrative Audio")]
     public AudioSource audioSource;
-    public AudioClip [] audioDialogues;
+    public AudioClip[] audioDialogues;
     private int audioClipsIndex;
 
     //SFX AUDIO
     [Header("Sound Effects Audio")]
-    public AudioClip [] soundEffects;
+    public AudioClip[] soundEffects;
     public AudioSource soundEffectsAudioSource;
 
     public void ShowPassengerDialogue()
     {
+        //Narrative Box: Pass line of dialogue (string), name (string) and portrait (sprite -> image)
+        //of passenger to DialogueBox THEN deploy DialogueBox through Animator
 
-        /*
-        Narrative Box: Pass line of dialogue (string), name (string) and portrait (sprite -> image)
-        of passenger to DialogueBox THEN deploy DialogueBox through Animator
-        */
+        if (passengerDialoguesIndex < passengerDialogues.Length)
+        {
+            dialogueBox.SetActive(true);
 
-        dialogueBox.SetActive(true);
+            //Reinicia completamente el animator
+            dialogueBoxAnimator.Rebind();
+            dialogueBoxAnimator.Update(0f);
+            //Reinicia completamente el animator
 
-        //Reinicia completamente el animator
-        dialogueBoxAnimator.Rebind();
-        dialogueBoxAnimator.Update(0f);
+            dialogueBoxAnimator.SetBool("StayDialogueBox", true);
 
-        dialogueBoxAnimator.SetBool("StayDialogueBox", true);
+            nameText.text = passengerDialogues[passengerDialoguesIndex].name;
+            passengerPortrait.sprite = passengerDialogues[passengerDialoguesIndex].portrait;
+            narrativeText.text = passengerDialogues[passengerDialoguesIndex].sentence;
+            passengerDialoguesIndex++;
 
-        nameText.text = passengerDialogues[passengerDialoguesIndex].name;
-        passengerPortrait.sprite = passengerDialogues[passengerDialoguesIndex].portrait;
-        narrativeText.text = passengerDialogues[passengerDialoguesIndex].sentence;
-
-        passengerDialoguesIndex++;
-
-        /*
-        Narrative Audio: Play audio clip then increment clip index
-        */
-
-        audioSource.clip = audioDialogues[audioClipsIndex];
-        audioSource.Play();
-        
-        audioClipsIndex++;
+            //Narrative Audio: Play audio clip then increment clip index
+            audioSource.clip = audioDialogues[audioClipsIndex];
+            audioSource.Play();
+            audioClipsIndex++;
+        }
     }
 
     public void CheckIfDialogueIsPlaying()
     {
-        if(!audioSource.isPlaying)
+        if (!audioSource.isPlaying && !Pause.gameIsPaused)
         {
             dialogueBoxAnimator.SetBool("CloseDialogueBox", true);
-        }  
+            if (!passengerAlreadySpawned)
+            {
+                SpawnPassenger();
+            }
+        }
     }
     public void HidePassengerDialogue()
     {
@@ -95,7 +103,7 @@ public class GameManager : MonoBehaviour
     }
     public void SpawnStage()
     {
-        if(progressBarSlider.value > 0)
+        if (progressBarSlider.value > 50)
         {
             Instantiate(stage2, spawnPoint.transform.position, spawnPoint.transform.rotation);
         }
@@ -115,20 +123,21 @@ public class GameManager : MonoBehaviour
     public void UpdateFuel(int pickedUpFuel, int typeOfInstance)
     {
         SfxType(typeOfInstance);
-        if(fuel < 100)
+        if (fuel < 100)
         {
             fuel = fuel + pickedUpFuel;
         }
-        
         //livesText.text = lives.ToString();
-        if(fuel == 0)
+        if (fuel <= 0)
         {
             DeadSequence();
-        }            
+        }
         //Debug.Log(score);
     }
     public void DeadSequence()
     {
+        endingsData.level = 2;
+        endingsData.youDiedEnding = true;
         SceneManager.LoadScene("MainMenu");
         Debug.Log("You Died");
     }
@@ -136,22 +145,27 @@ public class GameManager : MonoBehaviour
     //x=-0.42 y=0.595
     public void WinSequence()
     {
-        if(fuel <= 0)
+        if (fuel <= 0)
         {
             DeadSequence();
         }
-        else if(progressBarSlider.value >= 100)
+        else if (progressBarSlider.value >= 100)
         {
-            SceneManager.LoadScene("WinScreen");
-            Debug.Log("Winner you");
+            //Check for perfect ending
+            if (passengerDialoguesIndex >= passengerDialogues.Length)
+            {                
+                endingsData.perfectEnding = true;
+                endingsData.level = level;
+            }
+            SceneManager.LoadScene("MainMenu");
+            Debug.Log("You Are Winner");
         }
         else
         {
             //Progress Bar advance            
-            CDMXMap.position = new Vector3(CDMXMap.position.x - 0.00005f, CDMXMap.position.y + 0.00005f, CDMXMap.position.z);
             progressBarSlider.value += Time.deltaTime * progressBarDelta;
-            fuel -= fuelDelta;
-            fuelLevelBarSlider.value = fuel;            
+            fuel -= Time.deltaTime * fuelDelta;
+            fuelLevelBarSlider.value = fuel;
         }
     }
     public void SfxType(int sfxTypeIndex)
@@ -162,23 +176,34 @@ public class GameManager : MonoBehaviour
             case 0:
                 soundEffectsAudioSource.clip = soundEffects[0];
                 soundEffectsAudioSource.Play();
-            break;
+                break;
 
             case 1:
                 soundEffectsAudioSource.clip = soundEffects[1];
                 soundEffectsAudioSource.Play();
-            break;
+                break;
 
             case 2:
                 soundEffectsAudioSource.clip = soundEffects[2];
                 soundEffectsAudioSource.Play();
-            break;
-        }       
+                break;
+        }
     }
-    void Update()
+    public void SpawnPassenger()
+    {
+        passengerAlreadySpawned = true;
+        Instantiate(passenger, spawnPoint.transform);
+    }
+
+    //Main
+    private void Update()
     {
         WinSequence();
-        CheckIfDialogueIsPlaying();    
+        CheckIfDialogueIsPlaying();
+    }
+    private void Start()
+    {
+        SpawnPassenger();
     }
     private void Awake()
     {

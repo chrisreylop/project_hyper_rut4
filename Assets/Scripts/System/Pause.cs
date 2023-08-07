@@ -2,26 +2,76 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField]private GameObject Botonpausa;
-    [SerializeField] private GameObject Mainmenu;
+    public static bool gameIsPaused = false;
 
-    public void Pausa() {
-        Mainmenu.SetActive(true);
-        Botonpausa.SetActive(false);
-        Time.timeScale = 0f;
-    }
+    public GameObject pauseFrame;
+    public GameObject pauseMenu;
+    public GameObject configMenu;
+    
+    public AudioSource voiceAudioSource;
 
-    public void Continuar(){
-        Time.timeScale = 1f;
-        Botonpausa.SetActive(true);
-        Mainmenu.SetActive(false);
-    }
+    public KeyCode pauseKey;
 
-    public void Salir()
+    public void PauseKey()
     {
-        SceneManager.LoadScene("Menu principal");
+        if(Input.GetKeyDown(pauseKey))
+        {
+            if(gameIsPaused)
+            {
+                ContinueGame();
+            }
+            else if(!gameIsPaused)
+            {
+                PauseGame();
+            }
+        }
+    }
+    public void PauseGame()
+    {
+        if(voiceAudioSource.isPlaying)
+        {
+            voiceAudioSource.Pause();            
+        }
+        gameIsPaused = true;
+        Time.timeScale = 0f;
+        pauseFrame.SetActive(true);
+    }
+    public void ContinueGame()
+    {
+        gameIsPaused = false;
+
+        if(!voiceAudioSource.isPlaying)
+        {
+            voiceAudioSource.UnPause();            
+        }
+
+        Time.timeScale = 1f;
+        configMenu.SetActive(false);
+        pauseMenu.SetActive(true);    
+        pauseFrame.SetActive(false);
+    }
+    public void MainMenu()
+    {
+        gameIsPaused = false;
+        Time.timeScale = 1f;        
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void ConfigMenu()
+    {
+        pauseMenu.SetActive(false);
+        configMenu.SetActive(true);
+    }
+    public void CloseConfigMenu()
+    {
+        configMenu.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
+    void Update()
+    {
+        PauseKey();
     }
 }

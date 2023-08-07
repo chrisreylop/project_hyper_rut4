@@ -18,10 +18,14 @@ public class PickUpSpawnerMaster : MonoBehaviour
                 int rand = Random.Range (0,3);
                 if(rand == 0)
                 {
-                    //Passenger
+                    /*Passenger
                     tempGO = Instantiate(passenger, pickUpSpawns[i].transform.position, pickUpSpawns[i].transform.rotation);
                     tempGO.transform.SetParent(pickUpSpawns[i].transform);
-                    pickUpSpawns[i].GetComponent<PickUpType>().pickUpType = 0;
+                    pickUpSpawns[i].GetComponent<PickUpType>().pickUpType = 0;*/
+                    //Fuel
+                    tempGO = Instantiate(heartModel, pickUpSpawns[i].transform.position, pickUpSpawns[i].transform.rotation);
+                    tempGO.transform.SetParent(pickUpSpawns[i].transform);
+                    pickUpSpawns[i].GetComponent<PickUpType>().pickUpType = 1;
                 }
                 else if(rand == 1)
                 {
