@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject startFrame;
     public GameObject instructionsFrame;
     public GameObject levelDifficultyFrame;
+    public GameObject creditsFrame;
     public GameObject endingMessageFrame;
     public Image endingMessage;
 
@@ -28,6 +29,16 @@ public class MainMenu : MonoBehaviour
         levelDifficultyFrame.SetActive(true);
         startFrame.SetActive(false);
     }
+    public void ShowCreditsScreen()
+    {
+        creditsFrame.SetActive(true);
+        startFrame.SetActive(false);
+    }
+    public void HideCreditsScreen()
+    {
+        creditsFrame.SetActive(false);
+        startFrame.SetActive(true);
+    }
     public void ShowHowToPlayScreen()
     {
         instructionsFrame.SetActive(true);
@@ -38,9 +49,17 @@ public class MainMenu : MonoBehaviour
         instructionsFrame.SetActive(false);
         startFrame.SetActive(true);
     }
+    public void EasyDifficultyLevel()
+    {
+        SceneManager.LoadScene("EasyGame");
+    }
     public void MediumDifficultyLevel()
     {
         SceneManager.LoadScene("MediumGame");
+    }
+    public void HardDifficultyLevel()
+    {
+        SceneManager.LoadScene("HardGame");
     }
     public void Salir()
     {
@@ -105,8 +124,8 @@ public class MainMenu : MonoBehaviour
         else
         {
             endingMessageFrame.SetActive(false);
-        }
-        startFrame.SetActive(true);
+            startFrame.SetActive(true);
+        }        
     }
     public void EndingsDataResetter()
     {

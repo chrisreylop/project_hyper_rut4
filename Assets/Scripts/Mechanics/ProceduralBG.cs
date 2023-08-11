@@ -34,7 +34,7 @@ public class ProceduralBG : MonoBehaviour
     }
     void Start()
     {
-        instanceRandomFloor();
+        //instanceRandomFloor();
         instanceRandomMountains();
     }
 }

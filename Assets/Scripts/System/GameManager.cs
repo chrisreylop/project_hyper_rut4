@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,7 +15,9 @@ public class GameManager : MonoBehaviour
     public GameObject spawnPoint;
     public GameObject stage1;
     public GameObject stage2;
+    public GameObject stage3;
     public GameObject passenger;
+    public GameObject passengerSpawnPoint;
     public float passengerPickUpSpeed = 0f;
     public float progressBarDelta;
     public float courseSpeed = 0f;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
     [Header("Narrative Interface")]
     public Text nameText;
     public Text narrativeText;
+    public Text narrativeNumber;
     public Image passengerPortrait;
     public GameObject dialogueBox;
     public Dialogue[] passengerDialogues;
@@ -75,8 +77,9 @@ public class GameManager : MonoBehaviour
 
             nameText.text = passengerDialogues[passengerDialoguesIndex].name;
             passengerPortrait.sprite = passengerDialogues[passengerDialoguesIndex].portrait;
-            narrativeText.text = passengerDialogues[passengerDialoguesIndex].sentence;
+            narrativeText.text = passengerDialogues[passengerDialoguesIndex].sentence;            
             passengerDialoguesIndex++;
+            narrativeNumber.text = (passengerDialoguesIndex + "/" + passengerDialogues.Length);
 
             //Narrative Audio: Play audio clip then increment clip index
             audioSource.clip = audioDialogues[audioClipsIndex];
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour
             if (!passengerAlreadySpawned)
             {
                 SpawnPassenger();
+                //Debug.Log("Spawn Passenger # " + audioClipsIndex);
             }
         }
     }
@@ -103,7 +107,12 @@ public class GameManager : MonoBehaviour
     }
     public void SpawnStage()
     {
-        if (progressBarSlider.value > 50)
+        //75 for immersion, 0 for results
+        if(progressBarSlider.value > 90)
+        {
+            Instantiate(stage3, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        }
+        else if (progressBarSlider.value > 75)
         {
             Instantiate(stage2, spawnPoint.transform.position, spawnPoint.transform.rotation);
         }
@@ -113,7 +122,6 @@ public class GameManager : MonoBehaviour
             //Debug.Log("spawn stage 1");
         }
     }
-
     /*public void UpdateScore(int points)
     {
         score += points;
@@ -139,7 +147,7 @@ public class GameManager : MonoBehaviour
         endingsData.level = 2;
         endingsData.youDiedEnding = true;
         SceneManager.LoadScene("MainMenu");
-        Debug.Log("You Died");
+        //Debug.Log("You Died");
     }
 
     //x=-0.42 y=0.595
@@ -152,11 +160,16 @@ public class GameManager : MonoBehaviour
         else if (progressBarSlider.value >= 100)
         {
             //Check for perfect ending
+            endingsData.level = level;
             if (passengerDialoguesIndex >= passengerDialogues.Length)
-            {                
+            {
                 endingsData.perfectEnding = true;
-                endingsData.level = level;
             }
+            else
+            {
+                endingsData.youFailedEnding = true;
+            }
+
             SceneManager.LoadScene("MainMenu");
             Debug.Log("You Are Winner");
         }
@@ -192,7 +205,7 @@ public class GameManager : MonoBehaviour
     public void SpawnPassenger()
     {
         passengerAlreadySpawned = true;
-        Instantiate(passenger, spawnPoint.transform);
+        Instantiate(passenger, passengerSpawnPoint.transform);
     }
 
     //Main
@@ -203,10 +216,12 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
         SpawnPassenger();
     }
     private void Awake()
-    {
+    {        
         gameManagerInstance = this;
     }
 }
