@@ -1573,12 +1573,12 @@ MonoBehaviour:
   creditsFrame: {fileID: 676399313}
   endingMessageFrame: {fileID: 1853535662}
   endingMessage: {fileID: 1301359151}
-  youDiedImage: {fileID: 21300000, guid: fcfc15254a5bda74fa711b4e26099677, type: 3}
-  youFailedImage: {fileID: 21300000, guid: 057730c01f6953b48a7f588b18dee2d5, type: 3}
-  easyPerfectImage: {fileID: 21300000, guid: 71f01d75cdb33e647b9aa28bfd264daf, type: 3}
-  mediumPerfectImage: {fileID: 21300000, guid: d1bef60805803834698635127f7ee7da, type: 3}
-  hardPerfectImage: {fileID: 21300000, guid: 3bd7d10663422d948bd1b3ae99db25e5, type: 3}
-  truePerfectImage: {fileID: 21300000, guid: e5037ca22f8b04a4584e7e587282fb8e, type: 3}
+  youDiedImage: {fileID: 21300000, guid: 887fdf6cc1dfae74babd0f65a0709c55, type: 3}
+  youFailedImage: {fileID: 21300000, guid: ede68329c6b128342bc254b54e96f1ac, type: 3}
+  easyPerfectImage: {fileID: 21300000, guid: 7e7bce9e6ac97ff45a9668ac4417d8e0, type: 3}
+  mediumPerfectImage: {fileID: 21300000, guid: 81cf5ee00a5af9c41ba3f82f8836984c, type: 3}
+  hardPerfectImage: {fileID: 21300000, guid: 8c38ed5fa2cd0114f8d7c321142b0f37, type: 3}
+  truePerfectImage: {fileID: 21300000, guid: ba467d84e08d9224c91daf9459829e74, type: 3}
   endingsData: {fileID: 11400000, guid: 9ea9a37bd1236414ea87bb843e34626f, type: 2}
 --- !u!82 &1092485214
 AudioSource:
@@ -2225,7 +2225,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1280, y: 720}
+  m_SizeDelta: {x: 1478, y: 691}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1301359151
 MonoBehaviour:
@@ -2247,7 +2247,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ba7205e329e9c454a93c007a9210d7f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7e7bce9e6ac97ff45a9668ac4417d8e0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2302,7 +2302,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -275}
+  m_AnchoredPosition: {x: -252, y: -239}
   m_SizeDelta: {x: 320, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1336388304
