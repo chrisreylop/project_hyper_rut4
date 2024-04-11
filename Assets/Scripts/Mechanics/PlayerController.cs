@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public float maxRadius;
     public float speed;
     public float startWidth;
+    public bool movingLeft = false;
+    public bool movingRight = false;
     
     public void MoveBus()
     {
@@ -31,6 +33,11 @@ public class PlayerController : MonoBehaviour
                     transform.Translate(moveAmount, 0, 0);
                     //Debug.Log(Input.GetAxis("Horizontal") + "move left");
                 }
+                else if (movingLeft)
+                {
+                    float moveAmount = (moveSpeed/2) * Time.fixedDeltaTime * -1;
+                    transform.Translate(moveAmount, 0, 0);
+                }
             }
             if (transform.position.x < 3.5)
             {
@@ -40,19 +47,21 @@ public class PlayerController : MonoBehaviour
                     transform.Translate(moveAmount, 0, 0);
                     //Debug.Log(Input.GetAxis("Horizontal") + "move right");
                 }
+                else if(movingRight)
+                {
+                    float moveAmount = (moveSpeed / 2) * Time.fixedDeltaTime;
+                    transform.Translate(moveAmount, 0, 0);
+                }
             }
         }
     }
     public void Jump()
     {
-        if (Input.GetKeyDown(jumpKey))
+        jumping = true;
+        if(playJumpSFX)
         {
-            jumping = true;
-            if(playJumpSFX)
-            {
-                audioSource.Play();
-                playJumpSFX = false;
-            }
+            audioSource.Play();
+            playJumpSFX = false;
         }
     }
     /*public void OnAir()
@@ -150,7 +159,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         OnAir();
-        Jump();
+        if (Input.GetKeyDown(jumpKey))
+        {
+            Jump();
+        }
         MoveBus();
     }
 }
