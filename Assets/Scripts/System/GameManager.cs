@@ -59,6 +59,10 @@ public class GameManager : MonoBehaviour
     public AudioClip[] soundEffects;
     public AudioSource soundEffectsAudioSource;
 
+    //PARTICLE EFFECTS
+    [Header("ParticleSystems")]
+    public ParticleSystem[] particleSystems;
+
     public void ShowPassengerDialogue()
     {
         //Narrative Box: Pass line of dialogue (string), name (string) and portrait (sprite -> image)

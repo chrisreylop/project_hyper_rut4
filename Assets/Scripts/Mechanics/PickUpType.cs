@@ -6,6 +6,7 @@ public class PickUpType : MonoBehaviour
 {
     [HideInInspector]
     public int pickUpType;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -13,11 +14,13 @@ public class PickUpType : MonoBehaviour
             if(pickUpType == 0)
             {
                 GameManager.gameManagerInstance.UpdateFuel(30, 0);
+                GameManager.gameManagerInstance.particleSystems[0].Play();
                 //Debug.Log("Picked Up 30 fuel");
             }
             else if(pickUpType == 1)
             {
                 GameManager.gameManagerInstance.UpdateFuel(10, 1);
+                GameManager.gameManagerInstance.particleSystems[0].Play();
                 //Debug.Log("Picked Up 10 fuel");
             }
             else if(pickUpType == 2)

@@ -20,7 +20,8 @@ public class PlayerController : MonoBehaviour
     public float startWidth;
     public bool movingLeft = false;
     public bool movingRight = false;
-    
+    public Material sofiMat;
+
     public void MoveBus()
     {
         if(!Pause.gameIsPaused)
@@ -120,6 +121,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger("SOFIHit");
             Debug.Log("Crashed with Dron");
+            StartCoroutine(RedDamageEffect(0.5f));
         }
     }
     private IEnumerator Blast()
@@ -150,6 +152,7 @@ public class PlayerController : MonoBehaviour
         //lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = pointsCount + 1;
         audioSource = GetComponent<AudioSource>();
+        sofiMat.color = Color.white;
     }
     void Start()
     {
@@ -164,5 +167,11 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
         MoveBus();
+    }
+    public IEnumerator RedDamageEffect(float wait)
+    {
+        sofiMat.color = new Color(1,0.4f,0.4f);
+        yield return new WaitForSeconds(wait);
+        sofiMat.color = Color.white;
     }
 }
