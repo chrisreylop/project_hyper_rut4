@@ -8181,6 +8181,7 @@ MonoBehaviour:
   startWidth: 1
   movingLeft: 0
   movingRight: 0
+  sofiMat: {fileID: 2100000, guid: 02c45fe7c74629c469aea80ed0009efa, type: 2}
 --- !u!54 &1712072284
 Rigidbody:
   m_ObjectHideFlags: 0
