@@ -1864,7 +1864,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: aa864f6caa5cd71498c814c8cc11c66f, type: 2}
+      objectReference: {fileID: 2100000, guid: d05c606593eb7ea4ca57e8e61b5e0713, type: 2}
     - target: {fileID: 919132149155446097, guid: b6d05fb4dc995f74995499b4c2080b90,
         type: 3}
       propertyPath: m_Name
@@ -2121,6 +2121,7 @@ RectTransform:
   - {fileID: 942053143}
   - {fileID: 1853535663}
   - {fileID: 676399314}
+  - {fileID: 1345788390}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3059,7 +3060,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1901974105}
-  - {fileID: 1345788390}
   m_Father: {fileID: 1092485212}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3497,12 +3497,12 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1275348965}
+    m_TransformParent: {fileID: 1092485212}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
@@ -3512,7 +3512,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 24.410059
+      value: 24.410069
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
@@ -3522,17 +3522,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 450.3
+      value: 1654
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -337
+      value: 385
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2709
+      value: -5758
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
@@ -5334,7 +5334,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
   m_Intensity: 0.75
   m_Range: 10
   m_SpotAngle: 30
