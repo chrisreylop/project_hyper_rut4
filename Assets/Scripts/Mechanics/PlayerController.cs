@@ -22,36 +22,48 @@ public class PlayerController : MonoBehaviour
     public bool movingRight = false;
     public Material sofiMat;
 
+    public void MoveLeft(bool state)
+    {
+        movingLeft = state;
+    }
+    public void MoveRight(bool state)
+    {
+        movingRight = state;
+    }
+
     public void MoveBus()
     {
-        if(!Pause.gameIsPaused)
+        if (!Pause.gameIsPaused)
         {
             if (transform.position.x > -3.5)
             {
-                if (Input.GetAxis("Horizontal") < 0)
+                if (movingLeft)
+                {
+                    float moveAmount = (moveSpeed / 2) * Time.fixedDeltaTime * -1;
+                    transform.Translate(moveAmount, 0, 0);
+                    Debug.Log(Input.GetAxis("Horizontal") + " move left");
+                }
+                else if (Input.GetAxis("Horizontal") < 0)
                 {
                     float moveAmount = Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime;
                     transform.Translate(moveAmount, 0, 0);
                     //Debug.Log(Input.GetAxis("Horizontal") + "move left");
                 }
-                else if (movingLeft)
-                {
-                    float moveAmount = (moveSpeed/2) * Time.fixedDeltaTime * -1;
-                    transform.Translate(moveAmount, 0, 0);
-                }
+
             }
             if (transform.position.x < 3.5)
             {
-                if (Input.GetAxis("Horizontal") > 0)
+
+                if (movingRight)
+                {
+                    float moveAmount = (moveSpeed / 2) * Time.fixedDeltaTime;
+                    transform.Translate(moveAmount, 0, 0);
+                }
+                else if (Input.GetAxis("Horizontal") > 0)
                 {
                     float moveAmount = Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime;
                     transform.Translate(moveAmount, 0, 0);
                     //Debug.Log(Input.GetAxis("Horizontal") + "move right");
-                }
-                else if(movingRight)
-                {
-                    float moveAmount = (moveSpeed / 2) * Time.fixedDeltaTime;
-                    transform.Translate(moveAmount, 0, 0);
                 }
             }
         }
@@ -59,7 +71,7 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         jumping = true;
-        if(playJumpSFX)
+        if (playJumpSFX)
         {
             audioSource.Play();
             playJumpSFX = false;
@@ -87,7 +99,7 @@ public class PlayerController : MonoBehaviour
     }*/
     public void OnAir()
     {
-        if(!Pause.gameIsPaused)
+        if (!Pause.gameIsPaused)
         {
             if (jumping && maxThrust > 0)
             {
@@ -117,7 +129,7 @@ public class PlayerController : MonoBehaviour
             GameManager.gameManagerInstance.passengerAlreadySpawned = false;
             Destroy(other.gameObject);
         }
-        if(other.CompareTag("Dron"))
+        if (other.CompareTag("Dron"))
         {
             animator.SetTrigger("SOFIHit");
             Debug.Log("Crashed with Dron");
@@ -136,8 +148,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Draw(float currentRadius)
     {
-        float angleBetweenPoints = 360f / pointsCount;        
-        for(int i = 0; i <= pointsCount; i++)
+        float angleBetweenPoints = 360f / pointsCount;
+        for (int i = 0; i <= pointsCount; i++)
         {
             float angle = i * angleBetweenPoints * Mathf.Deg2Rad;
             Vector3 direction = new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0f);
@@ -170,7 +182,7 @@ public class PlayerController : MonoBehaviour
     }
     public IEnumerator RedDamageEffect(float wait)
     {
-        sofiMat.color = new Color(1,0.4f,0.4f);
+        sofiMat.color = new Color(1, 0.4f, 0.4f);
         yield return new WaitForSeconds(wait);
         sofiMat.color = Color.white;
     }

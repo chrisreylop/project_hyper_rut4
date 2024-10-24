@@ -24,6 +24,11 @@ public class MainMenu : MonoBehaviour
 
     public EndingsData endingsData;
 
+    public void OpenTachidoLinkTree()
+    {
+        Application.OpenURL("https://linktr.ee/tachidogames");
+    }
+
     public void ShowDifficultyMenu()
     {
         levelDifficultyFrame.SetActive(true);
@@ -51,7 +56,7 @@ public class MainMenu : MonoBehaviour
     }
     public void EasyDifficultyLevel()
     {
-        SceneManager.LoadScene("EasyGame");
+        //SceneManager.LoadScene("EasyGame");
     }
     public void MediumDifficultyLevel()
     {
@@ -59,7 +64,7 @@ public class MainMenu : MonoBehaviour
     }
     public void HardDifficultyLevel()
     {
-        SceneManager.LoadScene("HardGame");
+        //SceneManager.LoadScene("HardGame");
     }
     public void Salir()
     {
@@ -125,7 +130,7 @@ public class MainMenu : MonoBehaviour
         {
             endingMessageFrame.SetActive(false);
             startFrame.SetActive(true);
-        }        
+        }
     }
     public void EndingsDataResetter()
     {

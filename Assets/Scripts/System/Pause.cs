@@ -11,20 +11,34 @@ public class Pause : MonoBehaviour
     public GameObject pauseFrame;
     public GameObject pauseMenu;
     public GameObject configMenu;
-    
+
     public AudioSource voiceAudioSource;
 
     public KeyCode pauseKey;
 
     public void PauseKey()
     {
-        if(Input.GetKeyDown(pauseKey))
+        if (Input.GetKeyDown(pauseKey))
         {
-            if(gameIsPaused)
+            if (gameIsPaused)
             {
                 ContinueGame();
             }
-            else if(!gameIsPaused)
+            else if (!gameIsPaused)
+            {
+                PauseGame();
+            }
+        }
+    }
+    public void PauseKey(bool state)
+    {
+        if (state)
+        {
+            if (gameIsPaused)
+            {
+                ContinueGame();
+            }
+            else if (!gameIsPaused)
             {
                 PauseGame();
             }
@@ -32,9 +46,9 @@ public class Pause : MonoBehaviour
     }
     public void PauseGame()
     {
-        if(voiceAudioSource.isPlaying)
+        if (voiceAudioSource.isPlaying)
         {
-            voiceAudioSource.Pause();            
+            voiceAudioSource.Pause();
         }
         gameIsPaused = true;
         Time.timeScale = 0f;
@@ -44,20 +58,20 @@ public class Pause : MonoBehaviour
     {
         gameIsPaused = false;
 
-        if(!voiceAudioSource.isPlaying)
+        if (!voiceAudioSource.isPlaying)
         {
-            voiceAudioSource.UnPause();            
+            voiceAudioSource.UnPause();
         }
 
         Time.timeScale = 1f;
         configMenu.SetActive(false);
-        pauseMenu.SetActive(true);    
+        pauseMenu.SetActive(true);
         pauseFrame.SetActive(false);
     }
     public void MainMenu()
     {
         gameIsPaused = false;
-        Time.timeScale = 1f;        
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
     public void ConfigMenu()
