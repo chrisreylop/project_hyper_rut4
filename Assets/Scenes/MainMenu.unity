@@ -2971,7 +2971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1256228934
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3012,7 +3012,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0391830b519a55a41be5717c2e8a70f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a04b7ed3c673d134390a0d43499dd4d7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3577,7 +3577,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e7edc8fb1661a9840b72c9fdad7c9789,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7edc8fb1661a9840b72c9fdad7c9789, type: 3}
@@ -4624,7 +4624,7 @@ PrefabInstance:
     - target: {fileID: 965334522712905279, guid: 194daf3968024f44b94abda14e49121d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 965334522712905279, guid: 194daf3968024f44b94abda14e49121d,
         type: 3}
