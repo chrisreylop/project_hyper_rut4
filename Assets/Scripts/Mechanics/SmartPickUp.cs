@@ -26,10 +26,10 @@ public class SmartPickUp : MonoBehaviour
         }
         float sinMove;
         //sinMove = 0.025f * Mathf.Cos(Time.time * 1.0f);
-        sinMove = 0.01f * Mathf.Sin(Time.deltaTime * 15.0f * Time.time);
-        transform.Translate(sinMove, 0f, 1.0f * -Time.deltaTime * smartPickUpSpeed);
+        sinMove = 0.1f * Mathf.Sin(Time.fixedDeltaTime * 15.0f * Time.fixedDeltaTime);
+        transform.Translate(sinMove, 0f, 1.0f * -Time.fixedDeltaTime * smartPickUpSpeed);
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if(!Pause.gameIsPaused)
         {

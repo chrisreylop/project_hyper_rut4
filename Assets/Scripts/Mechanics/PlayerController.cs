@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public void MoveBus()
     {
-        if(!Pause.gameIsPaused)
+        if (!Pause.gameIsPaused)
         {
             if (transform.position.x > -3.5)
             {
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (movingLeft)
                 {
-                    float moveAmount = (moveSpeed/2) * Time.fixedDeltaTime * -1;
+                    float moveAmount = (moveSpeed / 2) * Time.fixedDeltaTime * -1;
                     transform.Translate(moveAmount, 0, 0);
                 }
             }
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
                     transform.Translate(moveAmount, 0, 0);
                     //Debug.Log(Input.GetAxis("Horizontal") + "move right");
                 }
-                else if(movingRight)
+                else if (movingRight)
                 {
                     float moveAmount = (moveSpeed / 2) * Time.fixedDeltaTime;
                     transform.Translate(moveAmount, 0, 0);
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         jumping = true;
-        if(playJumpSFX)
+        if (playJumpSFX)
         {
             audioSource.Play();
             playJumpSFX = false;
@@ -87,12 +87,12 @@ public class PlayerController : MonoBehaviour
     }*/
     public void OnAir()
     {
-        if(!Pause.gameIsPaused)
+        if (!Pause.gameIsPaused)
         {
             if (jumping && maxThrust > 0)
             {
                 transform.Translate(0, maxThrust * Time.fixedDeltaTime, 0);
-                StartCoroutine(Blast());
+                //StartCoroutine(Blast());
                 maxThrust -= 1f;
                 //Debug.Log("Jumped");
             }
@@ -108,6 +108,13 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    public void StartBlast()
+    {
+        if (jumping && maxThrust > 0)
+        {
+            StartCoroutine(Blast());
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Passenger"))
@@ -117,7 +124,7 @@ public class PlayerController : MonoBehaviour
             GameManager.gameManagerInstance.passengerAlreadySpawned = false;
             Destroy(other.gameObject);
         }
-        if(other.CompareTag("Dron"))
+        if (other.CompareTag("Dron"))
         {
             animator.SetTrigger("SOFIHit");
             Debug.Log("Crashed with Dron");
@@ -136,8 +143,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Draw(float currentRadius)
     {
-        float angleBetweenPoints = 360f / pointsCount;        
-        for(int i = 0; i <= pointsCount; i++)
+        float angleBetweenPoints = 360f / pointsCount;
+        for (int i = 0; i <= pointsCount; i++)
         {
             float angle = i * angleBetweenPoints * Mathf.Deg2Rad;
             Vector3 direction = new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0f);
@@ -159,7 +166,7 @@ public class PlayerController : MonoBehaviour
         maxThrust = thrust;
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         OnAir();
         if (Input.GetKeyDown(jumpKey))
@@ -168,9 +175,13 @@ public class PlayerController : MonoBehaviour
         }
         MoveBus();
     }
+    private void Update()
+    {
+        StartBlast();
+    }
     public IEnumerator RedDamageEffect(float wait)
     {
-        sofiMat.color = new Color(1,0.4f,0.4f);
+        sofiMat.color = new Color(1, 0.4f, 0.4f);
         yield return new WaitForSeconds(wait);
         sofiMat.color = Color.white;
     }

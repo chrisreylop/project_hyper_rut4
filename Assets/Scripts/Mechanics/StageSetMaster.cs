@@ -28,7 +28,7 @@ public class StageSetMaster : MonoBehaviour
         //var step = moveSpeed * Time.deltaTime;
         //transform.LookAt(trackCourse[trackPoint]);
         //transform.position = Vector3.MoveTowards(transform.position, trackCourse[trackPoint].position, step);
-        transform.Translate(Vector3.forward * -Time.deltaTime * courseSpeed);
+        transform.Translate(Vector3.forward * -Time.fixedDeltaTime * courseSpeed);
     }
     public void SetSpawners()
     {
@@ -41,7 +41,7 @@ public class StageSetMaster : MonoBehaviour
         }        
     }
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
         MoveCourse();
     }
